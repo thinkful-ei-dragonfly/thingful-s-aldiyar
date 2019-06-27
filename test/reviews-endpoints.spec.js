@@ -24,7 +24,7 @@ describe('Reviews Endpoints', function() {
 
   afterEach('cleanup', () => helpers.cleanTables(db))
 
-  describe(`POST /api/reviews`, () => {
+  describe.only(`POST /api/reviews`, () => {
     beforeEach('insert things', () =>
       helpers.seedThingsTables(
         db,
@@ -34,10 +34,10 @@ describe('Reviews Endpoints', function() {
     )
 
     it(`responds with 401 'Unauthorized request' when invalid password`, () => {
-      const userWithNoPassowrd = { user_name: testUsers[0].user_name, password: 'lololo' }
+      const userWithNoPassword = { user_name: testUsers[0].user_name, password: '' }
       return supertest(app)
         .post('/api/reviews')
-        .set('Authorization', helpers.makeAuthHeader(userWithNoPassowrd))
+        .set('Authorization', helpers.makeAuthHeader(userWithNoPassword))
         .expect(401, { error: `Unauthorized request` })
     })
 
