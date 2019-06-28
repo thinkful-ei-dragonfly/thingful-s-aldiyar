@@ -24,7 +24,7 @@ describe('Reviews Endpoints', function() {
 
   afterEach('cleanup', () => helpers.cleanTables(db))
 
-  describe.only(`POST /api/reviews`, () => {
+  describe(`POST /api/reviews`, () => {
     beforeEach('insert things', () =>
       helpers.seedThingsTables(
         db,
@@ -32,14 +32,6 @@ describe('Reviews Endpoints', function() {
         testThings,
       )
     )
-
-    it(`responds with 401 'Unauthorized request' when invalid password`, () => {
-      const userWithNoPassword = { user_name: testUsers[0].user_name, password: '' }
-      return supertest(app)
-        .post('/api/reviews')
-        .set('Authorization', helpers.makeAuthHeader(userWithNoPassword))
-        .expect(401, { error: `Unauthorized request` })
-    })
 
     it(`creates an review, responding with 201 and the new review`, function() {
       this.retries(3)
